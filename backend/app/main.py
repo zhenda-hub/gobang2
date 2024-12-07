@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .database import engine, Base
-from .api.endpoints import auth
+from .api.endpoints import auth, game, ws
 
 # 创建数据库表
 Base.metadata.create_all(bind=engine)
@@ -24,6 +24,8 @@ app.add_middleware(
 
 # 注册路由
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(game.router, prefix="/api/game", tags=["game"])
+app.include_router(ws.router, prefix="/ws", tags=["websocket"])
 
 @app.get("/")
 async def root():
