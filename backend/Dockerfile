@@ -9,8 +9,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 复制源代码
 COPY ./app ./app
 
+# 复制并设置 entrypoint 脚本
+COPY docker-entrypoint.sh .
+RUN chmod +x docker-entrypoint.sh
+
 # 暴露端口
 EXPOSE 8000
 
-# 启动命令
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# 设置 entrypoint
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
+# 保持容器运行（如果 entrypoint 失败）
+CMD ["sh", "-c", "tail -f /dev/null"]
