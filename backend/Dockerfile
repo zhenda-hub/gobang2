@@ -22,7 +22,7 @@ RUN chmod +x docker-entrypoint.sh
 EXPOSE 8000
 
 # 设置 entrypoint
-# ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["sh", "./docker-entrypoint.sh"]
 
 # 保持容器运行（如果 entrypoint 失败）
 CMD ["sh", "-c", "tail -f /dev/null"]
